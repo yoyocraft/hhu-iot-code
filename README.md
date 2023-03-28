@@ -27,5 +27,5 @@ git clone git@github.com:dingxinliang88/hhu-iot-code-sophomore.git
 > - [博客主页](https://dingxinliang88.github.io/)
 > - 邮箱：
 >   - 网易：d1741530592@163.com
->   - 谷歌：dingxinliang2002@gmail.com
+>   - 谷歌：dingxinliang1118@gmail.com
 
