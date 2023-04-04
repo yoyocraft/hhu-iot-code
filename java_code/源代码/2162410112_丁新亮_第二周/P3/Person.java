@@ -33,7 +33,9 @@ public class Person {
     }
 
     /**
-     * 
+     * 本人类聚合事物类可以做的行为
+     *
+     * @param baseThing 事物基类
      */
     public void doSomethingWithBaseThing(BaseThing baseThing) {
         baseThing.doSomething(this.name);
