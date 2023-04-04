@@ -18,7 +18,7 @@ public class Phone implements BaseThing{
 
     @Override
     public void doSomething(String personName) {
-        System.out.printf("%s用%s听音乐", personName, this.name);
+        System.out.printf("%s用%s听音乐%n", personName, this.name);
     }
 
 }
