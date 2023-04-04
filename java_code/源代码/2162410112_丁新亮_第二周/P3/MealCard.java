@@ -18,7 +18,7 @@ public class MealCard implements BaseThing {
 
     @Override
     public void doSomething(String personName) {
-        System.out.println(String.format("%s用%s刷卡吃饭", personName, this.name));
+        System.out.printf("%s用%s刷卡吃饭%n", personName, this.name);
     }
 
 }
