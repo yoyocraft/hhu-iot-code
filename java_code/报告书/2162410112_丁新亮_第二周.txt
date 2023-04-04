@@ -1,0 +1,312 @@
+第一题 P1
+
+P1.java
+==================================================================>
+import java.io.IOException;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class P1 {
+
+    public static void main(String[] args) throws IOException {
+        int a = (int) System.in.read() - '0';
+        char b = (char) System.in.read();
+        int c = (int) System.in.read() - '0';
+        int res = 0;
+        switch (b) {
+            case '+':
+                res = add(a, c);
+                break;
+            case '-':
+                res = sub(a, c);
+                break;
+            case '*':
+                res = mul(a, c);
+                break;
+            case '/':
+                res = div(a, c);
+                break;
+            default:
+        }
+        System.out.println("res = " + res);
+    }
+
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static int sub(int a, int b) {
+        return a - b;
+    }
+
+    public static int mul(int a, int b) {
+        return a * b;
+    }
+
+    public static int div(int a, int b) {
+        return (int) (a / b);
+    }
+}
+<==================================================================
+
+
+======================================================================
+----------------------------------------------------------------------
+======================================================================
+
+
+第二题：P2
+
+Vehicle.java
+==================================================================>
+
+package P2;
+
+/**
+ * 交通工具类
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class Vehicle {
+    /**
+     * 速度
+     */
+    private double speed;
+
+    /**
+     * 行驶距离
+     */
+    private double dist;
+
+    /**
+     * 行驶时间
+     */
+    private double time;
+
+    public Vehicle(double speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * 加速
+     * 
+     * @param speed 加速后的速度
+     */
+    public void speedUp(double speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * 行驶
+     * 
+     * @param time 行驶时间
+     */
+    public void drive(double time) {
+        this.time = time;
+        this.dist += this.time * this.speed;
+    }
+
+    /**
+     * 显示信息
+     */
+    public void showInfo() {
+        System.out.println("此辆车行驶了" + this.dist + "公里");
+    }
+}
+<==================================================================
+
+
+Test.java
+==================================================================>
+
+package P2;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class Test {
+    public static void main(String[] args) {
+        Vehicle vehicle = new Vehicle(10);
+        vehicle.drive(10);
+        vehicle.speedUp(15);
+        vehicle.drive(15);
+        vehicle.showInfo();
+    }
+}
+
+<==================================================================
+
+
+======================================================================
+----------------------------------------------------------------------
+======================================================================
+
+
+第三题 P3
+
+Person.java
+
+==================================================================>
+
+package P3;
+
+/**
+ * 本人类
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class Person {
+
+    /**
+     * 姓名
+     */
+    private String name;
+
+    /**
+     * 兴趣
+     */
+    private String hobby;
+
+
+    public Person(String name, String hobby) {
+        this.name = name;
+        this.hobby = hobby;
+    }
+
+
+    /**
+     * 本人类可以做的行为
+     */
+    public void doPersonThing() {
+        System.out.println(this.name + "在学习");
+    }
+
+    /**
+     * 
+     */
+    public void doSomethingWithBaseThing(BaseThing baseThing) {
+        baseThing.doSomething(this.name);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Person [name=" + name + ", hobby=" + hobby + "]";
+    }
+
+}
+<==================================================================
+
+BaseThing.java
+==================================================================>
+
+package P3;
+
+/**
+ * 事物类接口
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public interface BaseThing {
+
+    /**
+     * 事物行为
+     */
+    void doSomething(String personName);
+}
+
+<==================================================================
+
+
+Phone.java
+==================================================================>
+
+package P3;
+
+/**
+ * 手机类
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class Phone implements BaseThing{
+    /**
+     * 事物名称 - 手机
+     */
+    private String name;
+
+    public Phone(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void doSomething(String personName) {
+        System.out.println(String.format("%s用%s听音乐", personName, this.name));
+    }
+
+}
+
+
+<==================================================================
+
+
+
+MealCard.java
+==================================================================>
+
+package P3;
+
+/**
+ * 饭卡
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class MealCard implements BaseThing {
+    /**
+     * 事物名称 - 饭卡
+     */
+    private String name;
+
+    public MealCard(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void doSomething(String personName) {
+        System.out.println(String.format("%s用%s刷卡吃饭", personName, this.name));
+    }
+
+}
+
+<==================================================================
+
+
+Test.java
+==================================================================>
+
+package P3;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月04日
+ */
+public class Test {
+    public static void main(String[] args) {
+        Person person = new Person("CodeJuzi", "逛逛GitHub，参与开源");
+        person.doPersonThing();
+        person.doSomethingWithBaseThing(new MealCard("河海校园饭卡"));
+        person.doSomethingWithBaseThing(new Phone("小米手机"));
+    }
+}
+
+<==================================================================
