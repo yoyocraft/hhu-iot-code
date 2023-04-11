@@ -239,16 +239,17 @@ public class MyRectangle {
         int height2 = 7;
         // 长方形二
         Rectangle rectangle2 = new Rectangle(x2, y2, width2, height2);
+
+        if (!rectangle1.intersects(rectangle2)) {
+            System.out.println("两个长方形没有交集！");
+            return;
+        }
         // 得到二者相交的长方形
         Rectangle intersection = rectangle1.intersection(rectangle2);
         // 计算面积
         double width = intersection.getWidth();
         double height = intersection.getHeight();
-        if (width <= 0 || height <= 0) {
-            System.out.println("两个长方形没有交集");
-        }
         System.out.printf("长方形面积Size = %s%n", width * height);
-
     }
 
 }

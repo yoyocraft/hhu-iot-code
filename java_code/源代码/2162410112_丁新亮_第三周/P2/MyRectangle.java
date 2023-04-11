@@ -49,6 +49,7 @@ public class MyRectangle {
 
         if (!rectangle1.intersects(rectangle2)) {
             System.out.println("两个长方形没有交集！");
+            return;
         }
         // 得到二者相交的长方形
         Rectangle intersection = rectangle1.intersection(rectangle2);
