@@ -10,14 +10,10 @@ import java.awt.Rectangle;
  */
 public class Square extends Rectangle {
 
-    /**
-     * 正方形边长
-     */
-    private int width;
-
     public Square(int width) {
         super(width, width);
         this.width = width;
+        this.height = width;
     }
 
     /**
@@ -26,7 +22,7 @@ public class Square extends Rectangle {
      * @return 对角线长度
      */
     public double getDiagonalLength() {
-        return Math.sqrt(width * width * 2);
+        return Math.sqrt(this.width * this.width * 2);
     }
 
 
