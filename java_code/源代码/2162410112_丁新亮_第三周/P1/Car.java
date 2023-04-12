@@ -10,7 +10,7 @@ public class Car extends Vehicle {
     /**
      * 最大速度
      */
-    private int maxSpeed = 100;
+    private final int maxSpeed = 100;
 
     public Car(double speed) {
         super(speed);
