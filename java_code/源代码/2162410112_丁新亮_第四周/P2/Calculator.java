@@ -2,13 +2,16 @@ package P2;
 
 import javax.swing.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * 计算器类
- * 
+ *
  * @author codejuzi
  * @CreatedTime 2023年4月23日
  */
-public class Calculator {
+public class Calculator extends JFrame implements ActionListener {
 
     private final JTextField input1;
     private final JTextField input2;
@@ -20,9 +23,9 @@ public class Calculator {
 
     public Calculator() {
         // init ui
-        JFrame frame = new JFrame("Calculator");
-        frame.setSize(400, 250);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Calculator");
+        this.setSize(400, 250);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // create input frame and button
         this.input1 = new JTextField(10);
@@ -46,69 +49,42 @@ public class Calculator {
         panel.add(resLabel);
 
         // set listeners and calculator button
-        addListeners();
+        addBtn.addActionListener(this);
+        subBtn.addActionListener(this);
+        mulBtn.addActionListener(this);
+        divBtn.addActionListener(this);
         // add layout in windows
-        frame.add(panel);
+        this.add(panel);
 
         // show windows
-        frame.setVisible(true);
+        this.setVisible(true);
     }
 
-    /**
-     * 添加监听器
-     */
-    private void addListeners() {
-        addBtn.addActionListener(e -> {
-            try {
-                double num1 = Double.parseDouble(input1.getText());
-                double num2 = Double.parseDouble(input2.getText());
-                double res = num1 + num2;
-                resLabel.setText("res = " + res);
-            } catch (NumberFormatException ex) {
-                resLabel.setText("大哥，这里是计算器，你输入个不是数字的东东是个啥意思？？");
-                System.out.println(ex.getMessage());
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        try {
+            double num1 = Double.parseDouble(input1.getText());
+            double num2 = Double.parseDouble(input2.getText());
+            double result = 0;
 
-        subBtn.addActionListener(e -> {
-            try {
-                double num1 = Double.parseDouble(input1.getText());
-                double num2 = Double.parseDouble(input2.getText());
-                double res = num1 - num2;
-                resLabel.setText("res = " + res);
-            } catch (NumberFormatException ex) {
-                resLabel.setText("大哥，这里是计算器，你输入个不是数字的东东是个啥意思？？");
-                System.out.println(ex.getMessage());
+            if (e.getSource().equals(addBtn)) {
+                result = num1 + num2;
+            } else if (e.getSource().equals(subBtn)) {
+                result = num1 - num2;
+            } else if (e.getSource().equals(mulBtn)) {
+                result = num1 * num2;
+            } else if (e.getSource().equals(divBtn)) {
+                result = num1 / num2;
             }
-        });
 
-        mulBtn.addActionListener(e -> {
-            try {
-                double num1 = Double.parseDouble(input1.getText());
-                double num2 = Double.parseDouble(input2.getText());
-                double res = num1 * num2;
-                resLabel.setText("res = " + res);
-            } catch (NumberFormatException ex) {
-                resLabel.setText("大哥，这里是计算器，你输入个不是数字的东东是个啥意思？？");
-                System.out.println(ex.getMessage());
-            }
-        });
-
-        divBtn.addActionListener(e -> {
-            try {
-                double num1 = Double.parseDouble(input1.getText());
-                double num2 = Double.parseDouble(input2.getText());
-                double res = num1 / num2;
-                resLabel.setText("res = " + res);
-            } catch (NumberFormatException ex) {
-                resLabel.setText("大哥，这里是计算器，你输入个不是数字的东东是个啥意思？？");
-                System.out.println(ex.getMessage());
-            }
-        });
-
+            resLabel.setText("res = " + Double.toString(result));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid input!");
+        }
     }
 
     public static void main(String[] args) {
         new Calculator();
     }
+
 }
