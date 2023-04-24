@@ -1,0 +1,16 @@
+% N = 8;
+N = 16;
+n = 0 : 7;
+x = [1, 2, 3, 4, 4, 3, 2, 1];
+subplot(2, 2, 1);
+stem(n, x);
+title('signal x(n), 0 <= x <= 7');
+xlabel('n');
+X = fft(x, N);
+magX = abs(X);
+k = 0 : 1 : N - 1;
+w = 2 * pi / N * k;
+subplot(2, 2, 2);
+stem(w/pi, magX);
+title('DFT Magnitude');
+xlabel('frequency in pi units');
