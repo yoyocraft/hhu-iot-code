@@ -2,7 +2,21 @@
 > 河海大学 物联网工程学院 物联网工程大二下课程源代码
 >
 >  -- By CodeJuzi
+>
+> 作者很菜，还在学习中……
 ## 使用说明
+
+### 目录结构
+```
+.
+├── LICENSE
+├── README.md
+├── data_structure  => 数据结构
+├── java_code       => Java选修课
+└── matlab_test     => matlab实验（数字信号处理实验）
+
+```
+
 
 ### 下载：
 
@@ -28,4 +42,3 @@ git clone git@github.com:dingxinliang88/hhu-iot-code-sophomore.git
 > - 邮箱：
 >   - 网易：d1741530592@163.com
 >   - 谷歌：dingxinliang1118@gmail.com
-
