@@ -1,0 +1,312 @@
+第一题 P1
+
+Bank.java
+
+package P1;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Bank {
+    /**
+     * 余额
+     */
+    private double account;
+
+    public Bank(double account) {
+        this.account = account;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new BankException("额度异常");
+        }
+        this.account += amount;
+        System.out.println("剩余: ￥" + this.account);
+    }
+
+    public void withdraw(double amount) throws BankException {
+        if (this.account <= 0 || this.account < amount) {
+            throw new BankException("余额不足");
+        } else if (amount > 1000) {
+            throw new BankException("超出额度");
+        }
+        this.account -= amount;
+        System.out.println("剩余: ￥" + this.account);
+    }
+}
+
+
+
+BankException.java
+
+package P1;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class BankException extends RuntimeException {
+    public BankException(String msg) {
+        super(msg);
+    }
+}
+
+
+
+Test.java
+
+package P1;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Test {
+    public static void main(String[] args) {
+        Bank myBank = new Bank(1000.0);
+
+        try {
+            // 正常取款
+            myBank.withdraw(500.0);
+            // 取款超出额度
+            myBank.withdraw(2000.0);
+        } catch (BankException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            myBank.deposit(-500.0); // 存款为负数
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+
+==============================================================================================>
+
+第二题 P2
+
+Bank.java
+
+package P2;
+
+/**
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Bank {
+    /**
+     * 余额
+     */
+    private double account;
+
+    private static final double MAX_WITHDRAW_MONEY = 1000;
+
+    public Bank(double account) {
+        this.account = account;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            throw new BankException("额度异常");
+        }
+        this.account += amount;
+        System.out.printf("存入￥%s, 余额为￥%s%n", amount, this.account);
+    }
+
+    public void withdraw(double amount) throws BankException {
+        if (this.account <= 0 || this.account < amount) {
+            throw new BankException("余额不足");
+        } else if (amount > MAX_WITHDRAW_MONEY) {
+            throw new BankException("超出额度");
+        }
+        this.account -= amount;
+        System.out.printf("取出￥%s, 余额为￥%s%n", amount, this.account);
+    }
+}
+
+
+BankException.java
+
+package P2;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class BankException extends RuntimeException {
+    public BankException(String msg) {
+        super(msg);
+    }
+}
+
+Person.java
+
+package P2;
+
+import java.util.Random;
+import java.util.concurrent.*;
+
+/**
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public abstract class Person implements Runnable {
+
+    protected Bank bank;
+
+    protected Random random;
+
+    public Person(Bank bank) {
+        this.bank = bank;
+        this.random = new Random();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            // 核心线程数
+            int corePollSize = 2;
+            // 获取CPU盒数
+            int maximumPoolSize = 5;
+            // 存活时间
+            int keepAliveTime = 3;
+            // 创建线程
+            ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                    corePollSize,
+                    maximumPoolSize,
+                    keepAliveTime,
+                    TimeUnit.SECONDS,
+                    new LinkedBlockingQueue<>(3),
+                    Executors.defaultThreadFactory(),
+                    new ThreadPoolExecutor.AbortPolicy());
+            try {
+                Thread.sleep(getInterval());
+                // 执行任务
+                threadPoolExecutor.execute(getTask());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                // 关闭线程
+                threadPoolExecutor.shutdown();
+            }
+        }
+    }
+
+    /**
+     * @return 得到随机休眠时间（毫秒），默认1000ms
+     */
+    protected int getInterval() {
+        return 1000;
+    }
+
+    /**
+     * 根据运行绑定的对象不同， 获取存取金额
+     *
+     * @return 获得存取金额
+     */
+    protected abstract double getAmount();
+
+    /**
+     * 动态绑定，获取不同的线程任务（存取）
+     *
+     * @return 获得线程任务
+     */
+    protected abstract Runnable getTask();
+}
+
+
+Husband.java
+
+package P2;
+
+/**
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Husband extends Person {
+
+    public Husband(Bank bank) {
+        super(bank);
+    }
+
+    @Override
+    protected double getAmount() {
+        return 5000.0;
+    }
+
+    @Override
+    protected Runnable getTask() {
+        return () -> bank.deposit(getAmount());
+    }
+
+    @Override
+    protected int getInterval() {
+        // 随机 0 ~ 5秒
+        return random.nextInt(5001);
+    }
+}
+
+
+Wife.java
+
+package P2;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Wife extends Person {
+
+    public Wife(Bank bank) {
+        super(bank);
+    }
+
+    @Override
+    protected double getAmount() {
+        // 随机 0 ~ 1100
+        return random.nextInt(1101);
+    }
+
+    @Override
+    protected Runnable getTask() {
+        return () -> {
+            try {
+                bank.withdraw(getAmount());
+            } catch (BankException e) {
+                e.printStackTrace();
+            }
+        };
+    }
+}
+
+
+Test.java
+
+package P2;
+
+/**
+ * 
+ * @author codejuzi
+ * @CreatedTime 2023年4月25日
+ */
+public class Test {
+    public static void main(String[] args) {
+        Bank bank = new Bank(0.0);
+        Husband husband = new Husband(bank);
+        Wife wife = new Wife(bank);
+        
+        new Thread(husband).start();
+        new Thread(wife).start();
+    }
+}
+
+
