@@ -14,7 +14,7 @@ Attn = 1 / (10^(As / 20));          % 阻带衰减
 
 % 模拟巴特沃兹滤波器的计算
 [cs, ds] = p_butt(OmegaP, OmegaS, Rp, As);
-[b, a] = impinvar(cs, ds, T);   % 脉冲响应不变法
+[b, a] = impinvr(cs, ds, T);   % 脉冲响应不变法
 fprintf('\nb = \t');
 disp(b);
 fprintf('\na = \t');
@@ -29,3 +29,22 @@ db = 20 * log10((mag + eps) / max(mag));    % 以分贝为单位的幅度响应
 pha = angle(H);                             % 相位响应
 grd = grpdelay(b, a, w);                    % 群延时
 
+
+subplot(2, 2, 1); plot(w/pi,mag);title('幅度响应');
+xlabel('以pi为单位的频率');
+ylabel('|H|'); axis([0,1,0,1.1]);
+set(gca, 'XTickMode', 'manual', 'XTick', [0,0.2,0.4,1]);
+set(gca, 'YTickmode', 'manual', 'YTick', [0,Attn, Ripple, 1]); grid;
+subplot(2, 2, 2); plot(w/pi,pha/pi);title('相位响应');
+xlabel('以 pi 为单位的频率'); ylabel('radians'); axis([0,0.5,-1,1])
+set(gca, 'XTickMode', 'manual', 'XTick', [0,0.2,0.4,1]);
+set(gca, 'YTickmode', 'manual', 'YTick',[-1,-0.5,0,0.5,1]); grid;
+subplot(2, 2, 3); plot(w/pi,db);title('幅度 dB');
+xlabel('以pi为单位的频率'); ylabel('分贝');
+axis([0,1, -40,5]);
+set(gca, 'XTickMode', 'manual', 'XTick', [0,0.2,0.4,1]);
+set(gca, 'YTickmode', 'manual', 'yTick', [-30,-As,-Rp,0]); grid;
+subplot(2, 2, 4); plot(w/pi, grd/max(grd)); title('群延时');
+xlabel('以pi为单位的频率'); ylabel('归一化群延时'); axis([0,1,0,max(grd)/max(grd)])
+set(gca, 'XTickMode', 'manual', 'XTick', [0,0.2,0.4,1]);
+set(gca, 'YTickmode', 'manual', 'YTick', [0, round(max(grd)/2), max(grd)]); grid;

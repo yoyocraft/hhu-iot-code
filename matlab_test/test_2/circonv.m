@@ -1,10 +1,10 @@
 function y = circonv(x1, x2, N)
     if length(x1) > N
-        error('x1长度必须大于N')
+        error('x1长度必须等于N')
     end
 
     if length(x2) > N
-        error('x2长度必须大于N')
+        error('x2长度必须等于N')
     end
 
     x1 = [x1 zeros(1, N- length(x1))];
