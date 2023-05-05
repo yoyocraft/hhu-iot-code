@@ -1,9 +1,3 @@
-/***********************************************************
- * File Name: structure.h
- * Author: codejuzi
- * Date Created: 2023-04-12
- * Description: 头文件 -> 定义结构、函数定义
- ************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,7 +22,6 @@
 typedef struct LNode
 {
     int data;
-
     struct LNode *next;
 } LNode;
 
@@ -40,14 +33,12 @@ typedef struct LNode
 typedef struct LList
 {
     LNode *head;
-
     int length;
 } LList;
 
 #pragma endregion
 
 /// @brief 创建节点
-/// @param data
 /// @return 指向新节点的指针
 LNode *createLNode(int data);
 
@@ -56,15 +47,10 @@ LNode *createLNode(int data);
 LList *createLList();
 
 /// @brief 插入节点（头插法）
-/// @param l 链表
-/// @param data 待插入的数据
 /// @return OK => 插入成功， ERROR => 插入失败
 Status insertLNode(LList *l, int data);
 
 /// @brief 在链表的index位置插入节点
-/// @param l 链表
-/// @param index index索引位置
-/// @param data 待插入数据
 /// @return OK => 插入成功， ERROR => 插入失败
 Status insertLNodeByIndex(LList *l, int index, int data);
 
@@ -77,7 +63,5 @@ void outputLList(LList *l);
 void clearLList(LList *l);
 
 /// @brief 根据val查询，并输出
-/// @param l 链表
-/// @param val 待查找的数据
 /// @return OK => 查找到， ERROR => 链表为空 || 查询无果
 Status searchElement(LList *l, int val);

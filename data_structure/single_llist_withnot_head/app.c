@@ -4,7 +4,7 @@
  * Date Created: 2023-04-12
  * Description: 测试类（不带头节点）
  ************************************************************/
-#include "structure.h"
+#include "linkedlist.h"
 
 int main(int argc, char const *argv[])
 {

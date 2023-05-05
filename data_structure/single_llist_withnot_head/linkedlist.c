@@ -1,10 +1,10 @@
 /***********************************************************
-* File Name: structure.c
+* File Name: linkedlist.c
 * Author: codejuzi
 * Date Created: 2023-04-12
-* Description: 方法实现文件 => "structure.c"
+* Description: 方法实现文件 => "linkedlist.c"
 ************************************************************/
-#include "structure.h"
+#include "linkedlist.h"
 
 /// @brief
 /// @param data
