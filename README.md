@@ -11,9 +11,10 @@
 .
 ├── LICENSE
 ├── README.md
-├── data_structure  =数据结构
-├── java_code       =Java选修课
-└── matlab_test     =matlab实验（数字信号处理实验）
+├── data_structure
+├── image-process-code
+├── java_code
+└── matlab_test
 
 ```
 
