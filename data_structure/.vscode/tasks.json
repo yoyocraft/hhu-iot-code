@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "mkdir -p bin && gcc -Wall -g -o ${workspaceFolder}/bin/app.out $(find ${workspaceFolder}/${relativeFileDirname}/ -name '*.c')",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
